@@ -6,17 +6,29 @@ publish: &publish
   steps:
     - checkout
 
+    - restore_cache:
+          key: node-v1-{{ checksum "package.json" }}-{{ arch }}
+
     - run:
         name: Installing dependencies
         command: npm install
 
+    - save_cache:
+          key: node-v1-{{ checksum "package.json" }}-{{ arch }}
+          paths:
+            - node_modules
+
+    - run:
+        name: Installing Expo CLI
+        command: npm install -g expo-cli
+
     - run:
         name: Login into Expo
-        command: npm run expo -- login -u $EXPO_USERNAME -p $EXPO_PASSWORD --non-interactive
+        command: expo login -u $EXPO_USERNAME -p $EXPO_PASSWORD --non-interactive
 
     - run:
         name: Build android
-        command: npm run build:android
+        command: expo build:android --no-publish --non-interactive --max-workers 1
 
 jobs:
   publish_to_expo_dev:
