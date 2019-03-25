@@ -37,7 +37,10 @@ publish: &publish
 
     - run:
         name: Uploading to DeployGate
-        command: curl -F "token=$DEPLOY_GATE_TOKEN" -F "file=./app.apk" -F "message=Release 1.0.0" "https://deploygate.com/api/users/${DEPLOY_GATE_USERNAME}/apps"
+        command: |
+          echo 'export DEPLOY_GATE_TOKEN="DEPLOY_GATE_TOKEN"' >> $BASH_ENV
+          echo 'export DEPLOY_GATE_USERNAME="DEPLOY_GATE_USERNAME"' >> $BASH_ENV
+          curl -F "token=${DEPLOY_GATE_TOKEN}" -F "file=./app.apk" -F "message=Release 1.0.0" "https://deploygate.com/api/users/${DEPLOY_GATE_USERNAME}/apps"
 
 dependencies:
   cache_directories:
