@@ -12,11 +12,11 @@ publish: &publish
 
     - run:
         name: Login into Expo
-        command: npx expo login -u $EXPO_USERNAME -p $EXPO_PASSWORD
+        command: npm run expo:login
 
     - run:
         name: Build android
-        command: npx expo build --no-publish --non-interactive --max-workers 1
+        command: npm run build:android
 
 jobs:
   publish_to_expo_dev:
@@ -40,4 +40,4 @@ workflows:
       - publish_to_expo_prod:
           filters:
             branches:
-              only: master
+              only: production

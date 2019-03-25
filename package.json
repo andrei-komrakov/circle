@@ -4,7 +4,9 @@
     "start": "expo start",
     "android": "expo start --android",
     "ios": "expo start --ios",
-    "eject": "expo eject"
+    "eject": "expo eject",
+    "expo:login": "expo login -u $EXPO_USERNAME -p $EXPO_PASSWORD",
+    "build:android": "expo build:android --no-publish --non-interactive --max-workers 1"
   },
   "dependencies": {
     "expo": "^32.0.0",
