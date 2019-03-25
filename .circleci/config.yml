@@ -12,7 +12,7 @@ publish: &publish
 
     - run:
         name: Login into Expo
-        command: npm run expo:login
+        command: npm run expo -- login -u $EXPO_USERNAME -p $EXPO_PASSWORD --non-interactive
 
     - run:
         name: Build android
