@@ -20,7 +20,7 @@ publish: &publish
 
     - run:
         name: Installing Expo CLI
-        command: npm install -g expo-cli
+        command: sudo npm install -g expo-cli
 
     - run:
         name: Login into Expo
