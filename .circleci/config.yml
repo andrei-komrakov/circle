@@ -28,7 +28,7 @@ publish: &publish
 
     - run:
         name: Build android
-        command: expo build:android --no-publish --non-interactive --max-workers 1
+        command: expo build:android --no-publish --non-interactive
 
 jobs:
   publish_to_expo_dev:
