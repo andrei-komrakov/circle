@@ -26,9 +26,22 @@ publish: &publish
         name: Login into Expo
         command: expo login -u $EXPO_USERNAME -p $EXPO_PASSWORD --non-interactive
 
+    #- run:
+    #    name: Build android
+    #    command: expo build:android --no-publish --non-interactive
+
     - run:
-        name: Build android
-        command: expo build:android --no-publish --non-interactive
+        name: Downloading built apk
+        command: curl -o app.apk "$(expo url:apk)"
+
+    - run:
+        name: Uploading to DeployGate
+        command: curl -F "token=$DEPLOY_GATE_TOKEN" -F "file=./app.apk" -F "message=Release 1.0.0" https://deploygate.com/api/users/$DEPLOY_GATE_USERNAME/apps
+
+dependencies;
+  cache_directories:
+    - /home/ubuntu/nvm/versions/node/10.4.1/bin
+    - /home/ubuntu/nvm/versions/node/10.4.1/lib/node_modules
 
 jobs:
   publish_to_expo_dev:
