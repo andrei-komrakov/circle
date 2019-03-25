@@ -9,22 +9,22 @@ publish: &publish
     - restore_cache:
           key: node-v1-{{ checksum "package.json" }}-{{ arch }}
 
-    - run:
-        name: Installing dependencies
-        command: npm install
+    # - run:
+    #     name: Installing dependencies
+    #     command: npm install
 
     - save_cache:
           key: node-v1-{{ checksum "package.json" }}-{{ arch }}
           paths:
             - node_modules
 
-    - run:
-        name: Installing Expo CLI
-        command: sudo npm install -g expo-cli
+    # - run:
+    #     name: Installing Expo CLI
+    #     command: sudo npm install -g expo-cli
 
-    - run:
-        name: Login into Expo
-        command: expo login -u $EXPO_USERNAME -p $EXPO_PASSWORD --non-interactive
+    # - run:
+    #     name: Login into Expo
+    #     command: expo login -u $EXPO_USERNAME -p $EXPO_PASSWORD --non-interactive
 
     #- run:
     #    name: Build android
@@ -32,7 +32,8 @@ publish: &publish
 
     - run:
         name: Downloading built apk
-        command: curl -o app.apk "$(expo url:apk)"
+        #command: curl -o app.apk "$(expo url:apk)"
+        command: curl -o app.apk https://exp-shell-app-assets.s3.us-west-1.amazonaws.com/android/%40saturn812/circle-1fba5c35f6dd475db5339dccbf8cafbd-signed.apk
 
     - run:
         name: Uploading to DeployGate
