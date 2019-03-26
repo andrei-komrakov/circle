@@ -1,5 +1,5 @@
 version: 2
-publish: &publish
+deploy_expo_android: &deploy_expo_android
   working_directory: ~/circle
   docker:
     - image: circleci/node:10.4.1
@@ -18,52 +18,42 @@ publish: &publish
           paths:
             - node_modules
 
-    # - run:
-    #     name: Installing Expo CLI
-    #     command: sudo npm install -g expo-cli
-
     - run:
         name: Login into Expo
         command: npx expo login -u $EXPO_USERNAME -p $EXPO_PASSWORD --non-interactive
 
-    #- run:
-    #    name: Build android
-    #    command: expo build:android --no-publish --non-interactive
+    - run:
+       name: Build android
+       command: npx expo build:android --no-publish --non-interactive
 
     - run:
         name: Downloading built apk
-        #command: curl -o app.apk "$(expo url:apk)"
-        command: curl -o app.apk https://exp-shell-app-assets.s3.us-west-1.amazonaws.com/android/%40saturn812/circle-1fba5c35f6dd475db5339dccbf8cafbd-signed.apk
+        command: curl -o app.apk "$(expo url:apk)"
 
     - run:
         name: Uploading to DeployGate
         command: curl -F "token=${DEPLOY_GATE_TOKEN}" -F "file=@./app.apk" -F "message=Release 1.0.0" https://deploygate.com/api/users/${DEPLOY_GATE_USERNAME}/apps
 
-dependencies:
-  cache_directories:
-    - ~/nvm/v0.10.4/bin
-    - ~/nvm/v0.10.4/lib/node_modules
-
 jobs:
-  publish_to_expo_dev:
+  deploy_expo_android_staging:
     environment:
       EXPO_RELEASE_CHANNEL: dev
-    <<: *publish
+    <<: *deploy_expo_android
 
-  publish_to_expo_prod:
+  deploy_expo_android_prod:
     environment:
       EXPO_RELEASE_CHANNEL: default
-    <<: *publish
+    <<: *deploy_expo_android
 
 workflows:
   version: 2
   my_app:
     jobs:
-      - publish_to_expo_dev:
+      - deploy_expo_android_staging:
           filters:
             branches:
               only: development
-      - publish_to_expo_prod:
+      - deploy_expo_android_prod:
           filters:
             branches:
               only: production
