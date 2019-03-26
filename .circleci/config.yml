@@ -9,9 +9,9 @@ publish: &publish
     - restore_cache:
           key: node-v1-{{ checksum "package.json" }}-{{ arch }}
 
-    # - run:
-    #     name: Installing dependencies
-    #     command: npm install
+    - run:
+        name: Installing dependencies
+        command: npm install
 
     - save_cache:
           key: node-v1-{{ checksum "package.json" }}-{{ arch }}
@@ -22,9 +22,9 @@ publish: &publish
     #     name: Installing Expo CLI
     #     command: sudo npm install -g expo-cli
 
-    # - run:
-    #     name: Login into Expo
-    #     command: expo login -u $EXPO_USERNAME -p $EXPO_PASSWORD --non-interactive
+    - run:
+        name: Login into Expo
+        command: npm run expo -- login -u $EXPO_USERNAME -p $EXPO_PASSWORD --non-interactive
 
     #- run:
     #    name: Build android
