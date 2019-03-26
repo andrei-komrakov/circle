@@ -27,7 +27,7 @@
     },
     "android": {
         "package": "su.sgx.circle",
-        "versionCode": 1,
+        "versionCode": 22,
         "permissions": []
     }
   }
