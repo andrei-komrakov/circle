@@ -18,21 +18,21 @@ deploy_expo_android: &deploy_expo_android
         paths:
           - node_modules
 
-    # - run:
-    #     name: Login into Expo
-    #     command: npx expo login -u $EXPO_USERNAME -p $EXPO_PASSWORD --non-interactive
+    - run:
+        name: Login into Expo
+        command: npx expo login -u $EXPO_USERNAME -p $EXPO_PASSWORD --non-interactive
 
-    # - run:
-    #    name: Build android
-    #    command: npx expo build:android --no-publish --non-interactive
+    - run:
+       name: Build android
+       command: npx expo build:android --no-publish --non-interactive
 
-    # - run:
-    #     name: Downloading built apk
-    #     command: curl -o app.apk "$(npx expo url:apk)"
+    - run:
+        name: Downloading built apk
+        command: curl -o app2.apk "$(npx expo url:apk)"
 
-    # - run:
-    #     name: Uploading to DeployGate
-    #     command: curl -F "token=${DEPLOY_GATE_TOKEN}" -F "file=@./app.apk" -F "message=Release 1.0.1" https://deploygate.com/api/users/${DEPLOY_GATE_USERNAME}/apps
+    - run:
+        name: Uploading to DeployGate
+        command: curl -F "token=${DEPLOY_GATE_TOKEN}" -F "file=@./app2.apk" -F "message=Release 1.0.1" https://deploygate.com/api/users/${DEPLOY_GATE_USERNAME}/apps
 
 jobs:
   deploy_expo_android_staging:
