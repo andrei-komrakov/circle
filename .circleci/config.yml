@@ -36,8 +36,6 @@ deploy_expo_android: &deploy_expo_android
 
 jobs:
   deploy_expo_android_staging:
-    environment:
-      EXPO_RELEASE_CHANNEL: dev
     <<: *deploy_expo_android
 
   deploy_expo_android_prod:
