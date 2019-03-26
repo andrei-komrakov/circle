@@ -24,7 +24,7 @@ deploy_expo_android: &deploy_expo_android
 
     - run:
        name: Build android
-       command: npx expo build:android --non-interactive
+       command: npx expo build:android --non-interactive --release-channel $EXPO_RELEASE_CHANNE
 
     - run:
         name: Downloading built apk
