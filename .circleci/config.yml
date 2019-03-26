@@ -28,7 +28,7 @@ deploy_expo_android: &deploy_expo_android
 
     - run:
         name: Downloading built apk
-        command: curl -o app.apk "$(expo url:apk)"
+        command: curl -o app.apk "$(npx expo url:apk)"
 
     - run:
         name: Uploading to DeployGate
